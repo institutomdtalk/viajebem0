@@ -1,943 +1,578 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MD Talk — Sala de Espera</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<p>Welcome — MD Talk Travel Edition</p>
 <style>
-  :root {
-    --navy:       #0B1D3A;
-    --navy-deep:  #050D1A;
-    --navy-mid:   #0F2645;
-    --navy-light: #163158;
-    --gold:       #C4A45A;
-    --gold-light: #D4BA7A;
-    --gold-pale:  #E8D9B0;
-    --cream:      rgba(255,255,255,.88);
-    --muted:      rgba(255,255,255,.42);
-    --snake-head: #C4A45A;
-    --snake-body: #D4BA7A;
-    --snake-tail: rgba(196,164,90,0.4);
-    --cell:       44px;
-  }
+:root{
+  --bg:#F3F4F1;
+  --bg-warm:#EAEBE6;
+  --bg-card:#FFFFFF;
+  --ink:#151816;
+  --ink-s:#2E3230;
+  --ink-m:#82877F;
+  --emerald:#1A4034;
+  --emerald-d:#0F2A22;
+  --emerald-l:#28604E;
+  --emerald-bg:#ECF2EF;
+  --silver:#9A9E9B;
+  --silver-l:#B5B8B5;
+  --silver-d:#6E726F;
+  --silver-bg:#F0F1EF;
+  --sage:#7A8E7E;
+  --sage-bg:#EFF3F0;
+  --ivory:#F6F5F0;
+  --warm:#A09A8E;
+  --warm-bg:#F4F2EE;
+  --clay:#8A7468;
+  --clay-bg:#F4F0EC;
+  --brd:#D8DAD5;
+  --brd-l:#E4E6E1;
+  --fd:'Instrument Serif',Georgia,serif;
+  --fb:'Plus Jakarta Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.78;font-size:16.5px;-webkit-font-smoothing:antialiased}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(155deg,#0A1F18 0%,#0F2A22 28%,#1A4034 52%,#0F2A22 78%,#0A1F18 100%)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 42% at 35% 48%,rgba(154,158,155,.05) 0%,transparent 55%),radial-gradient(ellipse 40% 35% at 65% 45%,rgba(181,184,181,.03) 0%,transparent 50%);z-index:1}
+.hero::after{content:'';position:absolute;inset:0;opacity:.08;background-image:url("data:image/svg+xml,%3Csvg width='70' height='70' xmlns='<a href="http://www.w3.org/2000/svg" class="redactor-autoparser-object">http://www.w3.org/2000/svg</a>'%3E%3Ccircle cx='35' cy='35' r='.6' fill='%23B5B8B5' fill-opacity='.07'/%3E%3C/svg%3E");z-index:1}
+.hero-c{position:relative;z-index:2;text-align:center;padding:2rem;max-width:800px;animation:hIn 1.4s ease-out}
+@keyframes hIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge{display:inline-block;font-family:var(--fb);font-size:.62rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--silver-l);border:1px solid rgba(181,184,181,.16);padding:.42rem 1.3rem;border-radius:100px;margin-bottom:2rem;background:rgba(181,184,181,.04)}
+.hero h1{font-family:var(--fd);font-size:clamp(2.6rem,6vw,5rem);font-weight:400;color:#F3F4F1;line-height:1.08}
+.hero h1 em{font-style:italic;color:var(--silver-l)}
+.hero-line{width:50px;height:1px;background:var(--silver);margin:2rem auto;opacity:.18}
+.hero-sub{font-family:var(--fd);font-size:1.15rem;color:rgba(243,244,241,.28);font-style:italic;line-height:1.7;max-width:520px;margin:0 auto}
+.hero-scroll{margin-top:3.5rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(243,244,241,.1);font-family:var(--fb);font-size:.56rem;letter-spacing:.25em;text-transform:uppercase;animation:pls 2.5s ease-in-out infinite}
+.hero-scroll svg{width:15px;height:15px;stroke:rgba(243,244,241,.1)}
+@keyframes pls{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:.8;transform:translateY(5px)}}
 
-  html, body {
-    width: 100%; height: 100%;
-    background: var(--navy-deep);
-    font-family: 'Raleway', sans-serif;
-    overflow: hidden;
-    color: var(--cream);
-  }
+.nav{position:sticky;top:0;z-index:100;background:rgba(243,244,241,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--brd-l)}
+.nav-in{max-width:1200px;margin:0 auto;padding:0 2rem;overflow-x:auto;scrollbar-width:none}.nav-in::-webkit-scrollbar{display:none}
+.nav-ul{display:flex;list-style:none;white-space:nowrap}
+.nav-ul a{display:block;padding:.85rem .95rem;font-family:var(--fb);font-size:.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-m);text-decoration:none;border-bottom:2px solid transparent;transition:all .3s ease}
+.nav-ul a:hover{color:var(--emerald);border-bottom-color:var(--emerald)}
 
-  /* ─── DOT GRID BACKGROUND ─── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: radial-gradient(circle, rgba(196,164,90,.18) 1px, transparent 1px);
-    background-size: 28px 28px;
-    pointer-events: none;
-    z-index: 0;
-  }
+.main{max-width:870px;margin:0 auto;padding:0 2rem 6rem}
+.sc{padding-top:4.5rem}
+.sc-tag{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fb);font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.7rem;color:var(--emerald-l)}
+.sc-tag .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:.54rem;font-weight:700;letter-spacing:0;color:var(--ivory);background:var(--emerald)}
+.sc h2{font-family:var(--fd);font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:400;color:var(--ink);line-height:1.22;margin-bottom:.3rem}
+.sc-sub{font-family:var(--fd);font-size:1.02rem;color:var(--ink-m);font-style:italic;margin-bottom:2rem;line-height:1.6}
+.sc-intro{font-size:.95rem;color:var(--ink-s);line-height:1.85;margin-bottom:2rem;max-width:740px}
 
-  /* ─── AMBIENT GLOW ─── */
-  body::after {
-    content: '';
-    position: fixed;
-    top: -20%; left: 50%; transform: translateX(-50%);
-    width: 800px; height: 600px;
-    background: radial-gradient(ellipse, rgba(196,164,90,.06) 0%, transparent 65%);
-    pointer-events: none;
-    z-index: 0;
-  }
+.gr{margin-bottom:2.3rem}
+.gr-t{font-family:var(--fb);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-s);margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid var(--brd)}
+.cd{background:var(--bg-card);border:1px solid var(--brd-l);border-radius:var(--r);padding:1.1rem 1.35rem;margin-bottom:.46rem;transition:all .25s ease}
+.cd:hover{border-color:var(--brd);box-shadow:0 4px 16px rgba(21,24,22,.05);transform:translateY(-1px)}
+.cd .en{font-family:var(--fd);font-size:1.1rem;color:var(--ink);line-height:1.48;margin-bottom:.1rem}
+.cd .pt{font-family:var(--fb);font-size:.82rem;color:var(--ink-m);line-height:1.5}
 
-  /* ─── FLOATING GEO ELEMENTS ─── */
-  .geo {
-    position: fixed;
-    pointer-events: none;
-    z-index: 0;
-    animation: geoFloat 8s ease-in-out infinite;
-  }
-  .geo-ring {
-    width: 120px; height: 120px;
-    border: 1px solid rgba(196,164,90,.12);
-    border-radius: 50%;
-    top: 8%; right: 6%;
-    animation-duration: 11s;
-  }
-  .geo-ring-2 {
-    width: 60px; height: 60px;
-    border: 1px solid rgba(196,164,90,.18);
-    border-radius: 50%;
-    bottom: 14%; left: 4%;
-    animation-duration: 9s;
-    animation-delay: -3s;
-  }
-  .geo-diamond {
-    width: 18px; height: 18px;
-    border: 1px solid rgba(196,164,90,.3);
-    transform: rotate(45deg);
-    top: 50%; right: 4%;
-    animation-duration: 13s;
-    animation-delay: -5s;
-  }
-  .geo-line {
-    width: 1px; height: 80px;
-    background: linear-gradient(to bottom, transparent, rgba(196,164,90,.25), transparent);
-    top: 20%; left: 8%;
-    animation-duration: 7s;
-    animation-delay: -2s;
-  }
-  @keyframes geoFloat {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-14px); }
-  }
-  .geo-diamond { animation: geoPulse 13s ease-in-out infinite; }
-  @keyframes geoPulse {
-    0%, 100% { transform: rotate(45deg) scale(1);   opacity: .3; }
-    50%       { transform: rotate(45deg) scale(1.3); opacity: .7; }
-  }
+.nt{margin-top:.45rem;font-family:var(--fb);font-size:.71rem;padding:.42rem .72rem;border-radius:6px;line-height:1.55;border-left:3px solid}
+.nt.emerald{color:var(--emerald-d);background:var(--emerald-bg);border-color:var(--emerald)}
+.nt.silver{color:var(--silver-d);background:var(--silver-bg);border-color:var(--silver)}
+.nt.sage{color:#4A5E4E;background:var(--sage-bg);border-color:var(--sage)}
+.nt.warm{color:var(--clay);background:var(--warm-bg);border-color:var(--warm)}
 
-  /* ─── LAYOUT ─── */
-  .wrapper {
-    position: relative; z-index: 1;
-    width: 100vw; height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    padding: 0 0 0 0;
-  }
+.bk{border-radius:12px;padding:1.5rem 1.6rem;margin:1.8rem 0;border:1px solid}
+.bk h4{font-family:var(--fb);font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem}
+.bk p,.bk li{font-size:.9rem;color:var(--ink-s);line-height:1.75}
+.bk ul{list-style:none;padding:0}
+.bk li{padding-left:1.2rem;position:relative;margin-bottom:.4rem}
+.bk li::before{content:'';position:absolute;left:0;top:.6rem;width:5px;height:5px;border-radius:50%;background:var(--emerald);opacity:.35}
 
-  /* ─── HEADER ─── */
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 48px 20px;
-    border-bottom: 1px solid rgba(196,164,90,.12);
-  }
-  .brand {
-    display: flex; flex-direction: column; gap: 2px;
-  }
-  .brand-overline {
-    font-family: 'Raleway', sans-serif;
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: .25em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .brand-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 400;
-    letter-spacing: .08em;
-    color: var(--cream);
-    line-height: 1;
-  }
-  .brand-name em {
-    font-style: italic;
-    color: var(--gold);
-  }
+.bk.tip{background:linear-gradient(135deg,var(--emerald-bg),var(--bg));border-color:rgba(26,64,52,.1)}.bk.tip h4{color:var(--emerald)}
+.bk.method{background:linear-gradient(135deg,var(--silver-bg),var(--bg));border-color:rgba(154,158,155,.14)}.bk.method h4{color:var(--silver-d)}
+.bk.warn{background:linear-gradient(135deg,var(--warm-bg),var(--bg));border-color:rgba(160,154,142,.15)}.bk.warn h4{color:var(--clay)}
+.bk.note{background:linear-gradient(135deg,var(--sage-bg),var(--bg));border-color:rgba(122,142,126,.12)}.bk.note h4{color:var(--sage)}
+.bk.welcome{background:linear-gradient(135deg,var(--emerald-bg),var(--sage-bg));border-color:rgba(26,64,52,.1)}.bk.welcome h4{color:var(--emerald)}
 
-  .header-right {
-    text-align: right;
-    display: flex; flex-direction: column; gap: 4px;
-  }
-  .header-tag {
-    font-size: 9px;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 500;
-  }
-  .header-score-label {
-    font-size: 11px;
-    letter-spacing: .12em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .header-score-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 300;
-    color: var(--gold-light);
-    line-height: 1;
-    transition: all .2s;
-  }
+/* ══ STEP CARDS ══ */
+.step-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.6rem;margin:1.5rem 0 2rem}
+.step-card{background:var(--bg-card);border:1px solid var(--brd-l);border-radius:var(--r);padding:1.2rem 1.3rem;transition:all .25s ease;position:relative;overflow:hidden}
+.step-card:hover{border-color:var(--brd);box-shadow:0 4px 16px rgba(21,24,22,.05)}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--emerald);opacity:.25}
+.step-num{font-family:var(--fd);font-size:1.8rem;color:var(--emerald);opacity:.18;font-weight:400;line-height:1;margin-bottom:.4rem}
+.step-title{font-family:var(--fb);font-size:.78rem;font-weight:700;color:var(--ink);margin-bottom:.3rem;letter-spacing:.01em}
+.step-text{font-family:var(--fb);font-size:.78rem;color:var(--ink-m);line-height:1.55}
 
-  /* ─── MAIN ARENA ─── */
-  .arena {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex: 1;
-    overflow: hidden;
-  }
+/* ══ MODULE MAP ══ */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.5rem;margin:1.5rem 0 2rem}
+.mod-item{background:var(--bg-card);border:1px solid var(--brd-l);border-radius:var(--r);padding:1rem 1.2rem;transition:all .25s ease;display:flex;align-items:flex-start;gap:.8rem}
+.mod-item:hover{border-color:var(--brd);box-shadow:0 3px 12px rgba(21,24,22,.04)}
+.mod-n{font-family:var(--fd);font-size:1.4rem;color:var(--emerald);opacity:.22;flex-shrink:0;line-height:1;margin-top:.1rem}
+.mod-info .mod-title{font-family:var(--fb);font-size:.78rem;font-weight:700;color:var(--ink);margin-bottom:.15rem}
+.mod-info .mod-desc{font-family:var(--fb);font-size:.72rem;color:var(--ink-m);line-height:1.45}
 
-  #canvas-wrap {
-    position: relative;
-  }
+/* ══ BANNER ══ */
+.banner{background:linear-gradient(135deg,var(--emerald-d) 0%,var(--emerald) 50%,var(--emerald-d) 100%);padding:2.6rem 2rem;text-align:center;margin-top:3.5rem}
+.banner h3{font-family:var(--fd);font-size:1.55rem;color:rgba(243,244,241,.7);margin-bottom:.3rem}
+.banner h3 em{font-style:italic;color:var(--silver-l)}
+.banner p{font-family:var(--fb);font-size:.8rem;color:rgba(243,244,241,.25);max-width:440px;margin:0 auto;line-height:1.55}
 
-  canvas {
-    display: block;
-    border: 1px solid rgba(196,164,90,.2);
-    box-shadow:
-      0 0 60px rgba(196,164,90,.06),
-      inset 0 0 80px rgba(5,13,26,.6);
-    background: rgba(5,13,26,.55);
-    backdrop-filter: blur(2px);
-  }
+.sep{display:flex;align-items:center;justify-content:center;gap:1rem;padding:2.8rem 0 0}
+.sep::before,.sep::after{content:'';flex:1;max-width:100px;height:1px;background:var(--brd)}
+.sep .d{width:5px;height:5px;background:var(--emerald);transform:rotate(45deg);opacity:.15}
+.footer{text-align:center;padding:3.5rem 2rem;border-top:1px solid var(--brd-l);margin-top:3rem}
+.footer-b{font-family:var(--fd);font-size:1.25rem;color:var(--ink);margin-bottom:.3rem}
+.footer-t{font-family:var(--fb);font-size:.73rem;color:var(--ink-m)}
 
-  /* ─── WORD FLOATING LABELS (rendered on canvas overlay) ─── */
-  .word-label {
-    position: absolute;
-    font-family: 'Raleway', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    pointer-events: none;
-    transition: opacity .4s, transform .3s;
-    white-space: nowrap;
-    text-shadow: 0 0 12px rgba(196,164,90,.4);
-  }
-  .word-label.eaten {
-    animation: wordEaten .6s forwards;
-  }
-  @keyframes wordEaten {
-    0%   { opacity: 1; transform: scale(1.4);    color: #fff; }
-    100% { opacity: 0; transform: scale(2) translateY(-20px); }
-  }
-
-  /* ─── OVERLAY SCREENS ─── */
-  .overlay {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 20px;
-    background: rgba(5,13,26,.85);
-    backdrop-filter: blur(6px);
-    z-index: 10;
-    transition: opacity .5s;
-  }
-  .overlay.hidden { opacity: 0; pointer-events: none; }
-
-  .overlay-overline {
-    font-size: 9px;
-    letter-spacing: .3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 500;
-  }
-  .overlay-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 60px);
-    font-weight: 300;
-    color: var(--cream);
-    text-align: center;
-    line-height: 1.1;
-  }
-  .overlay-title em {
-    font-style: italic;
-    color: var(--gold);
-  }
-  .overlay-divider {
-    width: 60px; height: 1px;
-    background: var(--gold);
-    opacity: .5;
-  }
-  .overlay-sub {
-    font-size: 12px;
-    letter-spacing: .1em;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.8;
-  }
-  .overlay-score-display {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 64px;
-    font-weight: 300;
-    color: var(--gold-light);
-    line-height: 1;
-  }
-  .overlay-score-label {
-    font-size: 10px;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: -12px;
-  }
-
-  .btn-start {
-    margin-top: 8px;
-    padding: 14px 48px;
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: 'Raleway', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .25em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all .25s;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-start::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: var(--gold);
-    transform: translateX(-101%);
-    transition: transform .25s;
-    z-index: -1;
-  }
-  .btn-start:hover { color: var(--navy-deep); }
-  .btn-start:hover::before { transform: translateX(0); }
-
-  /* ─── GLOSSARY TICKER ─── */
-  .word-earned {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-style: italic;
-    color: var(--gold-light);
-    text-align: center;
-    pointer-events: none;
-    z-index: 20;
-    opacity: 0;
-    text-shadow: 0 0 30px rgba(196,164,90,.6);
-  }
-  .word-earned.show {
-    animation: wordPop .9s forwards;
-  }
-  @keyframes wordPop {
-    0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
-    70%  { opacity: 1; transform: translate(-50%, -50%) scale(1);   }
-    100% { opacity: 0; transform: translate(-50%, -60%) scale(0.95); }
-  }
-
-  /* ─── GLOSSARY SIDEBAR ─── */
-  .glossary {
-    position: fixed;
-    right: 32px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    max-height: 60vh;
-    overflow: hidden;
-    z-index: 5;
-    width: 220px;
-  }
-  .glossary-title {
-    font-size: 8px;
-    letter-spacing: .25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 500;
-    margin-bottom: 4px;
-    opacity: .7;
-  }
-  .glossary-entry {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    opacity: 0;
-    transform: translateX(20px);
-    animation: slideIn .4s forwards;
-    border-left: 1px solid rgba(196,164,90,.25);
-    padding-left: 10px;
-  }
-  @keyframes slideIn {
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .glossary-word {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
-    color: var(--gold-light);
-    font-style: italic;
-  }
-  .glossary-pt {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: .05em;
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    border-top: 1px solid rgba(196,164,90,.1);
-    padding: 14px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(to right, rgba(196,164,90,.04), transparent);
-  }
-  .footer-controls {
-    display: flex; gap: 24px;
-  }
-  .key-hint {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 10px;
-    letter-spacing: .12em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .key {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px;
-    border: 1px solid rgba(196,164,90,.3);
-    color: var(--gold);
-    font-size: 9px;
-    font-weight: 600;
-    border-radius: 3px;
-  }
-  .footer-level {
-    font-size: 10px;
-    letter-spacing: .15em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .footer-level span {
-    color: var(--gold);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-weight: 300;
-  }
-
-  /* score pulse */
-  @keyframes scorePulse {
-    0%,100% { transform: scale(1); }
-    50%      { transform: scale(1.15); color: #fff; }
-  }
-  .pulse { animation: scorePulse .3s ease; }
+@media(max-width:768px){.main{padding:0 1.2rem 4rem}.sc{padding-top:3.5rem}.step-grid,.mod-grid{grid-template-columns:1fr}.nav-ul a{padding:.78rem .68rem;font-size:.56rem}}
+.fi{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fi.v{opacity:1;transform:translateY(0)}
 </style>
-</head>
-<body>
+<section class="hero">
+  <div class="hero-c">
+    <div class="hero-badge">MD Talk — Travel Edition</div>
+    <h1>Welcome to<br><em>Travel English</em></h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Seu guia completo de inglês para viagens internacionais.<br>Como usar este material, como estudar e como absorver tudo.</p>
+    <div class="hero-scroll">Comece aqui<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"></path></svg></div>
+  </div>
+</section>
+<nav class="nav"><div class="nav-in"><ul class="nav-ul">
+  <li><a href="#s1">Sobre o Curso</a></li>
+  <li><a href="#s2">Mapa dos Módulos</a></li>
+  <li><a href="#s3">Como Estudar</a></li>
+  <li><a href="#s4">Técnicas de Assimilação</a></li>
+  <li><a href="#s5">Usando o Material</a></li>
+  <li><a href="#s6">Antes da Viagem</a></li>
+  <li><a href="#s7">Durante a Viagem</a></li>
+  <li><a href="#s8">Mentalidade</a></li>
+</ul></div></nav>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p><main class="main"><p></p>
+<!-- ███ 1 ███ -->
+<section class="sc" id="s1">
+  <div class="sc-tag"><span class="n">1</span> About This Course</div>
+  <h2>Sobre Este Curso</h2>
+  <p class="sc-sub">O que é, para quem é, e o que torna este material diferente de tudo que você já viu.</p>
 
-<!-- Floating geometric decorations -->
-<div class="geo geo-ring"></div>
-<div class="geo geo-ring-2"></div>
-<div class="geo geo-diamond"></div>
-<div class="geo geo-line"></div>
+  <p class="sc-intro">Este curso foi criado para pessoas que querem se comunicar com confiança em viagens internacionais. Não é um curso de gramática. Não é um curso para "aprender inglês do zero". É um material de <strong>preparação prática e cultural</strong> — desenhado para que você saiba exatamente o que dizer, como dizer e quando dizer em cada situação real que vai encontrar no exterior.</p>
 
-<!-- Word earned toast -->
-<div class="word-earned" id="wordToast"></div>
+  <p class="sc-intro">Cada módulo cobre uma área específica da viagem: do aeroporto ao hotel, do restaurante à farmácia, das compras à locomoção urbana. Todas as frases são contextualizadas, traduzidas e acompanhadas de notas culturais que explicam não apenas <strong>o que</strong> falar, mas <strong>por que</strong> falar assim.</p>
 
-<!-- Glossary sidebar -->
-<div class="glossary" id="glossary">
-  <div class="glossary-title">Vocabulário adquirido</div>
-</div>
+  <div class="bk welcome">
+    <h4>Para Quem é Este Curso</h4>
+    <ul>
+      <li>Você tem algum conhecimento de inglês (mesmo que básico) e quer se sentir preparado(a) para viajar</li>
+      <li>Você já viaja, mas trava na hora de falar — e quer eliminar essa insegurança</li>
+      <li>Você tem nível intermediário ou avançado, mas percebe que fala "inglês de livro" e quer soar natural</li>
+      <li>Você quer entender o que nativos realmente dizem (e não apenas o que os livros ensinam)</li>
+      <li>Você é profissional e quer causar boa impressão em contextos internacionais</li>
+    </ul>
+  </div>
 
-<div class="wrapper">
-  <!-- HEADER -->
-  <header>
-    <div class="brand">
-      <div class="brand-overline">Instituto MD Talk</div>
-      <div class="brand-name">MD <em>Talk</em></div>
+  <div class="bk note">
+    <h4>O Que Este Curso Não É</h4>
+    <p>Este curso <strong>não ensina gramática</strong> de forma tradicional. Não há exercícios de conjugação, tabelas de verbos irregulares ou regras abstratas. Todo o aprendizado acontece através de <strong>frases reais em contextos reais</strong>. A gramática está embutida nas frases — você absorve a estrutura pelo uso, não pela teoria. Essa é uma escolha intencional: é assim que nativos aprendem.</p>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<!-- ███ 2 ███ -->
+<section class="sc" id="s2">
+  <div class="sc-tag"><span class="n">2</span> Course Map</div>
+  <h2>Mapa dos Módulos</h2>
+  <p class="sc-sub">A estrutura completa do curso — do cumprimento à despedida.</p>
+
+  <p class="sc-intro">O curso é organizado em módulos temáticos que acompanham a jornada completa de uma viagem internacional. Você pode seguir na ordem ou ir direto ao módulo que mais precisa neste momento.</p>
+
+  <div class="mod-grid">
+    <div class="mod-item"><div class="mod-n">01</div><div class="mod-info"><div class="mod-title">Primeiras Impressões</div><div class="mod-desc">Cumprimentos, apresentações, excuse me vs sorry, small talk, despedidas.</div></div></div>
+    <div class="mod-item"><div class="mod-n">02</div><div class="mod-info"><div class="mod-title">Aeroporto, Voo e Imigração</div><div class="mod-desc">Check-in, segurança, embarque, voo, conexões, imigração, alfândega, bagagem.</div></div></div>
+    <div class="mod-item"><div class="mod-n">03</div><div class="mod-info"><div class="mod-title">Hospedagem</div><div class="mod-desc">Reservas, check-in, quarto, serviços, problemas, check-out, gorjetas, Airbnb.</div></div></div>
+    <div class="mod-item"><div class="mod-n">04</div><div class="mod-info"><div class="mod-title">Locomoção Urbana</div><div class="mod-desc">Aluguel de carro, Uber, táxi, metrô, ônibus, direções, estacionamento, problemas.</div></div></div>
+    <div class="mod-item"><div class="mod-n">05</div><div class="mod-info"><div class="mod-title">Restaurantes e Gastronomia</div><div class="mod-desc">Reservas, cardápio, pedidos, vinhos, bebidas, cafés, bares, conta, gorjetas.</div></div></div>
+    <div class="mod-item"><div class="mod-n">06</div><div class="mod-info"><div class="mod-title">Compras no Exterior</div><div class="mod-desc">Lojas, roupas, provador, preços, pagamento, tax free, trocas, devoluções.</div></div></div>
+    <div class="mod-item"><div class="mod-n">07</div><div class="mod-info"><div class="mod-title">Farmácia e Emergências Médicas</div><div class="mod-desc">Sintomas, medicamentos, alergias, urgent care, pronto-socorro, 911, seguro.</div></div></div>
+    <div class="mod-item"><div class="mod-n">B</div><div class="mod-info"><div class="mod-title">Módulo Bônus — The Confident Traveler</div><div class="mod-desc">Números, datas, ligações, emergências gerais, falsos cognatos, inteligência cultural, mindset.</div></div></div>
+  </div>
+
+  <div class="bk tip">
+    <h4>Como Navegar</h4>
+    <p>Cada módulo é independente e completo. Se sua viagem é daqui a uma semana, vá direto aos módulos que mais precisa (Aeroporto, Hotel, Restaurante). Se tem mais tempo, siga a ordem — ela foi pensada para construir confiança progressivamente, do básico (cumprimentos) ao complexo (emergências médicas).</p>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<!-- ███ 3 ███ -->
+<section class="sc" id="s3">
+  <div class="sc-tag"><span class="n">3</span> How to Study</div>
+  <h2>Como Estudar Este Material</h2>
+  <p class="sc-sub">Um método concreto para extrair o máximo de cada módulo — sem enrolação.</p>
+
+  <p class="sc-intro">Este material foi feito para ser usado, não apenas lido. A diferença entre quem "estuda" inglês e quem realmente aprende está no <strong>método de estudo</strong>. Aqui está o sistema recomendado — testado e comprovado.</p>
+
+  <div class="step-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-title">Leitura Panorâmica</div>
+      <div class="step-text">Leia o módulo inteiro uma vez, sem parar para decorar. Apenas absorva o contexto, as situações e o fluxo. Marque mentalmente o que parece mais útil para você.</div>
     </div>
-    <div class="header-right">
-      <div class="header-tag">Sala de Espera</div>
-      <div class="header-score-label">Score</div>
-      <div class="header-score-val" id="scoreDisplay">0</div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-title">Leitura Focada</div>
+      <div class="step-text">Releia o módulo, agora prestando atenção às frases. Leia o inglês em voz alta. Não se preocupe com perfeição — o objetivo é que sua boca se acostume a formar os sons.</div>
     </div>
-  </header>
-
-  <!-- ARENA -->
-  <div class="arena" id="arena">
-    <div id="canvas-wrap">
-      <canvas id="game"></canvas>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-title">Seleção Pessoal</div>
+      <div class="step-text">Escolha 10 a 15 frases de cada módulo que são mais relevantes para a sua viagem. Essas são suas "frases de sobrevivência". Anote-as separadamente ou marque-as no material.</div>
     </div>
-
-    <!-- START OVERLAY -->
-    <div class="overlay" id="overlayStart">
-      <div class="overlay-overline">Sala de Espera · MD Talk</div>
-      <div class="overlay-title">Enquanto você <em>aguarda</em>,<br>pratique Medical English</div>
-      <div class="overlay-divider"></div>
-      <div class="overlay-sub">
-        Guie a cobra pelo grid e colete<br>
-        termos clínicos em inglês<br>
-        <br>
-        <span style="color:var(--gold-pale); font-size:10px; letter-spacing:.15em">USE AS SETAS OU WASD PARA MOVER</span>
-      </div>
-      <button class="btn-start" id="btnStart">Iniciar</button>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-title">Prática em Voz Alta</div>
+      <div class="step-text">Repita suas frases selecionadas em voz alta, pelo menos 3 vezes cada. Diga a frase em português, depois tente dizer em inglês sem olhar. Depois confira. Repita até fluir.</div>
     </div>
-
-    <!-- GAME OVER OVERLAY -->
-    <div class="overlay hidden" id="overlayOver">
-      <div class="overlay-overline">Session Ended</div>
-      <div class="overlay-title"><em>Game</em> Over</div>
-      <div class="overlay-divider"></div>
-      <div class="overlay-score-display" id="finalScore">0</div>
-      <div class="overlay-score-label">termos coletados</div>
-      <div class="overlay-sub" id="lastWord"></div>
-      <button class="btn-start" id="btnRestart">Nova Sessão</button>
+    <div class="step-card">
+      <div class="step-num">05</div>
+      <div class="step-title">Simulação Mental</div>
+      <div class="step-text">Feche os olhos e imagine-se na situação: no balcão do hotel, no restaurante, na imigração. Visualize o cenário e pratique o diálogo mentalmente. Isso cria memória de contexto.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">06</div>
+      <div class="step-title">Revisão Espaçada</div>
+      <div class="step-text">Revise suas frases selecionadas nos dias 1, 3, 7 e 14 após o primeiro estudo. A repetição espaçada é o que fixa na memória de longo prazo — não a repetição exaustiva de um único dia.</div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-controls">
-      <div class="key-hint"><div class="key">↑</div><div class="key">↓</div><div class="key">←</div><div class="key">→</div> mover</div>
-      <div class="key-hint"><div class="key" style="width:32px">P</div> pausar</div>
-    </div>
-    <div class="footer-level">Nível <span id="levelDisplay">I</span></div>
-  </footer>
-</div>
+  <div class="bk method">
+    <h4>O Ritmo Ideal de Estudo</h4>
+    <p>Estudar <strong>20 a 30 minutos por dia</strong> é mais eficaz do que 3 horas em um único dia. O cérebro consolida informação durante o sono — estudar um pouco todos os dias dá ao cérebro tempo de processar. Se sua viagem é daqui a 30 dias, dedique um módulo a cada 3–4 dias. Se é daqui a uma semana, priorize os módulos mais urgentes e foque nas frases de sobrevivência.</p>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<!-- ███ 4 ███ -->
+<section class="sc" id="s4">
+  <div class="sc-tag"><span class="n">4</span> Assimilation Techniques</div>
+  <h2>Técnicas de Assimilação</h2>
+  <p class="sc-sub">Como fazer as frases saírem automaticamente — sem pensar, sem traduzir, sem travar.</p>
 
-<script>
-// ─── MEDICAL VOCABULARY ───────────────────────────────────────────────────────
-const VOCAB = [
-  { en: 'dyspnea',        pt: 'dispneia' },
-  { en: 'tachycardia',    pt: 'taquicardia' },
-  { en: 'bradycardia',    pt: 'bradicardia' },
-  { en: 'hypertension',   pt: 'hipertensão' },
-  { en: 'hypoxia',        pt: 'hipóxia' },
-  { en: 'edema',          pt: 'edema' },
-  { en: 'syncope',        pt: 'síncope' },
-  { en: 'auscultation',   pt: 'ausculta' },
-  { en: 'pallor',         pt: 'palidez' },
-  { en: 'cyanosis',       pt: 'cianose' },
-  { en: 'hemoptysis',     pt: 'hemoptise' },
-  { en: 'dysphagia',      pt: 'disfagia' },
-  { en: 'paraesthesia',   pt: 'parestesia' },
-  { en: 'vertigo',        pt: 'vertigem' },
-  { en: 'prognosis',      pt: 'prognóstico' },
-  { en: 'anamnesis',      pt: 'anamnese' },
-  { en: 'triage',         pt: 'triagem' },
-  { en: 'palpation',      pt: 'palpação' },
-  { en: 'percussion',     pt: 'percussão' },
-  { en: 'jaundice',       pt: 'icterícia' },
-  { en: 'diuresis',       pt: 'diurese' },
-  { en: 'embolism',       pt: 'embolia' },
-  { en: 'ischemia',       pt: 'isquemia' },
-  { en: 'infarction',     pt: 'infarto' },
-  { en: 'necrosis',       pt: 'necrose' },
-  { en: 'fibrosis',       pt: 'fibrose' },
-  { en: 'stenosis',       pt: 'estenose' },
-  { en: 'thrombosis',     pt: 'trombose' },
-  { en: 'septicemia',     pt: 'septicemia' },
-  { en: 'hemostasis',     pt: 'hemostasia' },
-  { en: 'diaphoresis',    pt: 'diaforese' },
-  { en: 'epistaxis',      pt: 'epistaxe' },
-  { en: 'oliguria',       pt: 'oligúria' },
-  { en: 'anuria',         pt: 'anúria' },
-  { en: 'hematuria',      pt: 'hematúria' },
-  { en: 'cachexia',       pt: 'caquexia' },
-  { en: 'ascites',        pt: 'ascite' },
-  { en: 'atelectasis',    pt: 'atelectasia' },
-  { en: 'pneumothorax',   pt: 'pneumotórax' },
-  { en: 'emphysema',      pt: 'enfisema' },
-];
+  <p class="sc-intro">O maior desafio de quem aprende inglês não é entender — é <strong>produzir na hora</strong>. Você entende a frase quando lê, mas na hora de falar, trava. Isso acontece porque a frase está na sua <strong>memória de reconhecimento</strong>, mas não na sua <strong>memória de produção</strong>. Essas técnicas resolvem exatamente isso.</p>
 
-const ROMAN = ['I','II','III','IV','V','VI','VII'];
+  <div class="gr"><div class="gr-t">Técnica 1 — Shadowing (Espelhamento)</div>
+    <div class="cd"><div class="en">Ouça a frase em inglês (use Google Translate como gerador de áudio) e repita imediatamente, tentando copiar o ritmo, a entonação e a velocidade.</div><div class="pt">O objetivo não é entender — é imitar. Seu corpo aprende a mecânica dos sons antes de seu cérebro processar o significado. É assim que crianças aprendem.</div></div>
+  </div>
 
-// ─── CANVAS SETUP ────────────────────────────────────────────────────────────
-const canvas = document.getElementById('game');
-const ctx    = canvas.getContext('2d');
-const arena  = document.getElementById('arena');
+  <div class="gr"><div class="gr-t">Técnica 2 — Chunking (Blocos de Significado)</div>
+    <div class="cd"><div class="en">Não decore palavras isoladas. Decore blocos: "I'd like to..." / "Could you..." / "Is there a..." / "How much is..."</div><div class="pt">O cérebro armazena blocos de forma muito mais eficiente do que palavras soltas. Quando você memoriza <strong>"I'd like to..."</strong>, pode completar com qualquer coisa: "...make a reservation", "...order the salmon", "...check out".</div><div class="nt emerald">Esses blocos são chamados de <strong>chunks</strong>. Nativos não constroem frases palavra por palavra — eles juntam chunks. Ao dominar 20 a 30 chunks, você cobre 80% das situações de viagem.</div></div>
+  </div>
 
-let COLS, ROWS, CELL, W, H;
+  <div class="gr"><div class="gr-t">Técnica 3 — O Método do Espelho</div>
+    <div class="cd"><div class="en">Fique em frente a um espelho e simule a interação completa: cumprimente, peça algo, agradeça, resolva um problema.</div><div class="pt">Parecer estranho? Pode ser. Mas funciona. O espelho ativa a mesma área do cérebro usada em interações sociais. Você se acostuma a ver seu rosto falando inglês — e isso reduz a ansiedade na hora real.</div></div>
+  </div>
 
-function resize() {
-  const pad  = 32;
-  const aw   = arena.clientWidth  - pad * 2;
-  const ah   = arena.clientHeight - pad * 2;
-  CELL = window.innerWidth < 700 ? 36 : 44;
-  COLS = Math.floor(aw / CELL);
-  ROWS = Math.floor(ah / CELL);
-  // keep odd for centering
-  if (COLS % 2 === 0) COLS--;
-  if (ROWS % 2 === 0) ROWS--;
-  COLS = Math.max(11, COLS);
-  ROWS = Math.max(9,  ROWS);
-  W = COLS * CELL;
-  H = ROWS * CELL;
-  canvas.width  = W;
-  canvas.height = H;
-}
-resize();
+  <div class="gr"><div class="gr-t">Técnica 4 — Ancoragem por Contexto</div>
+    <div class="cd"><div class="en">Associe frases a momentos específicos do seu dia. Toda vez que entrar no carro, diga: "Excuse me, could you take me to..." Ao entrar em um café, pense: "I'll have a..."</div><div class="pt">A ancoragem conecta o inglês ao seu cotidiano. Quando a situação real acontecer na viagem, o cérebro já terá o caminho neural pronto.</div></div>
+  </div>
 
-// ─── GAME STATE ──────────────────────────────────────────────────────────────
-let snake, dir, nextDir, food, score, level, speed, paused, running, intervalId;
-let collected = [];
-let foodItem  = null;
+  <div class="gr"><div class="gr-t">Técnica 5 — O Caderno de Bolso</div>
+    <div class="cd"><div class="en">Tenha um caderno pequeno (ou uma nota no celular) com suas 30 frases mais importantes. Revise nos momentos mortos: fila do banco, sala de espera, antes de dormir.</div><div class="pt">A repetição casual e frequente é mais poderosa do que sessões longas e esporádicas. Transforme tempo morto em tempo de aprendizado.</div></div>
+  </div>
 
-function initGame() {
-  resize();
-  const cx = Math.floor(COLS / 2);
-  const cy = Math.floor(ROWS / 2);
-  snake   = [{ x: cx, y: cy }, { x: cx - 1, y: cy }, { x: cx - 2, y: cy }];
-  dir     = { x: 1, y: 0 };
-  nextDir = { x: 1, y: 0 };
-  score   = 0;
-  level   = 1;
-  speed   = 200;
-  paused  = false;
-  running = true;
-  collected = [];
-  foodItem  = null;
-  updateScoreDisplay();
-  updateLevelDisplay();
-  placeFood();
-  clearInterval(intervalId);
-  intervalId = setInterval(tick, speed);
-}
+  <div class="bk tip">
+    <h4>Os 30 Chunks Mais Importantes do Curso</h4>
+    <ul>
+      <li><strong>"I'd like to..."</strong> — Eu gostaria de...</li>
+      <li><strong>"Could you..."</strong> — Você poderia...</li>
+      <li><strong>"Do you have..."</strong> — Vocês têm...</li>
+      <li><strong>"Is there a..."</strong> — Tem um(a)...</li>
+      <li><strong>"How much is..."</strong> — Quanto custa...</li>
+      <li><strong>"I'm looking for..."</strong> — Estou procurando...</li>
+      <li><strong>"Could I get..."</strong> — Posso pedir...</li>
+      <li><strong>"I have a reservation under..."</strong> — Tenho reserva no nome...</li>
+      <li><strong>"What time does... close / open?"</strong> — Que horas fecha / abre?</li>
+      <li><strong>"I need help with..."</strong> — Preciso de ajuda com...</li>
+      <li><strong>"Can you recommend..."</strong> — Pode recomendar...</li>
+      <li><strong>"How long does it take?"</strong> — Quanto tempo leva?</li>
+      <li><strong>"I'll have the..."</strong> — Vou querer o/a...</li>
+      <li><strong>"Could you say that again?"</strong> — Poderia repetir?</li>
+      <li><strong>"I appreciate it."</strong> — Eu agradeço.</li>
+    </ul>
+    <p style="margin-top:.8rem">Domine esses 15 blocos e você já se comunica em 80% das situações de viagem. O restante é vocabulário específico — que cada módulo fornece.</p>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<!-- ███ 5 ███ -->
+<section class="sc" id="s5">
+  <div class="sc-tag"><span class="n">5</span> Using the Material</div>
+  <h2>Entendendo a Estrutura do Material</h2>
+  <p class="sc-sub">O que cada elemento da página significa e como extrair o máximo.</p>
 
-// ─── FOOD WORDS ──────────────────────────────────────────────────────────────
-function placeFood() {
-  const remaining = VOCAB.filter(v => !collected.find(c => c.en === v.en));
-  const pool = remaining.length > 0 ? remaining : VOCAB;
-  const item = pool[Math.floor(Math.random() * pool.length)];
-  let x, y, safe;
-  let tries = 0;
-  do {
-    x = 1 + Math.floor(Math.random() * (COLS - 2));
-    y = 1 + Math.floor(Math.random() * (ROWS - 2));
-    safe = !snake.some(s => s.x === x && s.y === y);
-    tries++;
-  } while (!safe && tries < 200);
-  foodItem = { x, y, ...item };
-}
+  <p class="sc-intro">Cada módulo segue uma estrutura consistente para facilitar a navegação e o estudo. Veja como interpretar cada elemento.</p>
 
-// ─── TICK ────────────────────────────────────────────────────────────────────
-function tick() {
-  if (!running || paused) return;
-  dir = { ...nextDir };
+  <div class="gr"><div class="gr-t">Elementos que você vai encontrar</div>
+    <div class="cd"><div class="en">Frases em inglês com tradução</div><div class="pt">O coração do curso. Cada frase aparece no contexto em que seria usada na vida real. A tradução é funcional — não literal. Reflete como um brasileiro diria a mesma coisa em português.</div></div>
+    <div class="cd"><div class="en">Notas explicativas (caixas coloridas sob as frases)</div><div class="pt">Trazem informação cultural, dica de pronúncia, alerta sobre erros comuns ou contexto adicional. Não pule essas notas — muitas vezes a informação mais valiosa está nelas.</div></div>
+    <div class="cd"><div class="en">Diálogos Práticos</div><div class="pt">Simulações completas de conversas reais. Mostram o fluxo natural de uma interação do início ao fim. Use para praticar em voz alta, assumindo o papel de "You".</div></div>
+    <div class="cd"><div class="en">Grades de Vocabulário</div><div class="pt">Vocabulário organizado em grade visual para referência rápida. Não precisa decorar tudo — use como consulta quando surgir a necessidade.</div></div>
+    <div class="cd"><div class="en">Blocos Especiais (Dica de Ouro, Nota Cultural, Atenção)</div><div class="pt">Informações que vão além da língua: comportamento, etiqueta, erros culturais e estratégias. Leia com cuidado — essas informações evitam constrangimentos reais.</div></div>
+  </div>
 
-  const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+  <div class="bk method">
+    <h4>O Que Priorizar se Tem Pouco Tempo</h4>
+    <p>Se você tem <strong>apenas uma semana</strong> antes da viagem: (1) Leia as frases e os diálogos dos módulos mais relevantes para seu roteiro; (2) Selecione 5 frases por módulo que são indispensáveis; (3) Pratique-as em voz alta todas as noites; (4) Leia todos os blocos de "Nota Cultural" — evitam gafes que nenhuma frase conserta. Não tente absorver tudo. <strong>Foque em profundidade, não em amplitude.</strong></p>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<!-- ███ 6 ███ -->
+<section class="sc" id="s6">
+  <div class="sc-tag"><span class="n">6</span> Before You Travel</div>
+  <h2>Checklist Antes da Viagem</h2>
+  <p class="sc-sub">O que fazer nos dias que antecedem a viagem para chegar preparado(a).</p>
 
-  // wall collision
-  if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
-    gameOver(); return;
-  }
-  // self collision
-  if (snake.some(s => s.x === head.x && s.y === head.y)) {
-    gameOver(); return;
-  }
+  <div class="gr"><div class="gr-t">30 dias antes</div>
+    <div class="cd"><div class="en">Comece o curso. Um módulo a cada 3–4 dias.</div><div class="pt">Siga a ordem sugerida: Primeiras Impressões, Aeroporto, Hotel, Transporte, Restaurantes, Compras, Farmácia, Bônus.</div></div>
+    <div class="cd"><div class="en">Identifique os módulos mais relevantes para o seu roteiro.</div><div class="pt">Vai alugar carro? Priorize o módulo de Locomoção. Vai a restaurantes finos? Foque no módulo de Gastronomia. Viagem com crianças? Dê atenção extra às seções de farmácia e emergências.</div></div>
+  </div>
 
-  snake.unshift(head);
+  <div class="gr"><div class="gr-t">7 dias antes</div>
+    <div class="cd"><div class="en">Revise suas frases selecionadas (caderno de bolso).</div><div class="pt">Neste ponto, você já deve ter 30–50 frases selecionadas. Revise-as diariamente.</div></div>
+    <div class="cd"><div class="en">Pratique os diálogos de imigração em voz alta.</div><div class="pt">A imigração é o primeiro teste real. As perguntas são previsíveis — ensaie até que as respostas saiam automaticamente.</div></div>
+    <div class="cd"><div class="en">Salve informações essenciais no celular (offline).</div><div class="pt">Endereço do hotel, número do seguro viagem, contato do consulado, cópia digital do passaporte.</div></div>
+  </div>
 
-  if (foodItem && head.x === foodItem.x && head.y === foodItem.y) {
-    eatFood();
-  } else {
-    snake.pop();
-  }
+  <div class="gr"><div class="gr-t">Na véspera</div>
+    <div class="cd"><div class="en">Releia o módulo de Aeroporto e Imigração.</div><div class="pt">É o módulo que você vai usar primeiro. Uma última leitura fixa as frases mais frescas na memória.</div></div>
+    <div class="cd"><div class="en">Faça o check-in online e salve o boarding pass.</div><div class="pt">Menos uma interação em inglês no aeroporto — mais confiança para as que realmente importam.</div></div>
+    <div class="cd"><div class="en">Baixe mapas offline e apps essenciais.</div><div class="pt">Google Maps (offline), Google Translate (idiomas baixados), Uber, app da companhia aérea.</div></div>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<!-- ███ 7 ███ -->
+<section class="sc" id="s7">
+  <div class="sc-tag"><span class="n">7</span> During the Trip</div>
+  <h2>Durante a Viagem — Como Usar o Material em Tempo Real</h2>
+  <p class="sc-sub">Este curso não foi feito para ficar na gaveta. Use-o como ferramenta de consulta no momento que precisar.</p>
 
-  draw();
-}
+  <p class="sc-intro">Quando estiver no exterior, este material funciona como um <strong>guia de referência rápida</strong>. Antes de entrar em uma situação nova — restaurante, farmácia, balcão de locadora — abra o módulo correspondente no celular e revise as frases principais. Leva 2 minutos e muda completamente sua confiança.</p>
 
-function eatFood() {
-  score++;
-  collected.unshift({ en: foodItem.en, pt: foodItem.pt });
-  if (collected.length > 8) collected = collected.slice(0, 8);
-  showWordToast(foodItem);
-  updateGlossary();
-  updateScoreDisplay();
+  <div class="gr"><div class="gr-t">Exemplos de uso em tempo real</div>
+    <div class="cd"><div class="en">Está indo jantar? Abra o módulo de Restaurantes no táxi e revise as frases de pedido e de vinhos.</div><div class="pt">Quando chegar ao restaurante, as frases estarão frescas na sua memória — e você vai pedir com naturalidade.</div></div>
+    <div class="cd"><div class="en">Vai à farmácia? Abra o módulo de Farmácia e procure os sintomas que precisa descrever.</div><div class="pt">Use o celular como "cola" na hora se necessário — ninguém vai achar estranho. Nativos fazem o mesmo com tradutores.</div></div>
+    <div class="cd"><div class="en">Problema no hotel? Abra a seção de Problemas e Reclamações antes de ligar para a recepção.</div><div class="pt">Ter a frase pronta antes de falar reduz a ansiedade em 90%. Você não está improvisando — está executando.</div></div>
+    <div class="cd"><div class="en">Na fila da imigração? Releia a seção de Imigração enquanto espera.</div><div class="pt">Você tem 20–40 minutos na fila. Use esse tempo para revisar as respostas às perguntas do oficial.</div></div>
+  </div>
 
-  // level up every 5 words
-  const newLevel = Math.floor(score / 5) + 1;
-  if (newLevel !== level) {
-    level = Math.min(newLevel, 7);
-    speed = Math.max(80, 200 - (level - 1) * 18);
-    clearInterval(intervalId);
-    intervalId = setInterval(tick, speed);
-    updateLevelDisplay();
-  }
-  placeFood();
-}
+  <div class="bk tip">
+    <h4>Dica de Ouro — O Poder do "Warm-Up"</h4>
+    <p>Antes de qualquer interação em inglês, faça um <strong>aquecimento mental de 30 segundos</strong>: diga em voz baixa (ou mentalmente) 3 frases em inglês. Qualquer frase. "Good morning." "I'd like to..." "Thank you." Isso ativa o "modo inglês" no cérebro. A primeira frase é sempre a mais difícil — faça esse aquecimento e ela sai sem esforço.</p>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<!-- ███ 8 ███ -->
+<section class="sc" id="s8">
+  <div class="sc-tag"><span class="n">8</span> Mindset</div>
+  <h2>A Mentalidade Certa</h2>
+  <p class="sc-sub">Antes de qualquer frase em inglês, existe algo mais importante: como você se posiciona.</p>
 
-function gameOver() {
-  running = false;
-  clearInterval(intervalId);
-  draw(); // draw final state
-  setTimeout(() => showOverlay('over'), 600);
-}
+  <p class="sc-intro">Este é talvez o conteúdo mais importante de todo o curso. Nenhuma frase, nenhum vocabulário, nenhuma pronúncia perfeita substitui a <strong>postura certa</strong>. A forma como você se sente ao falar inglês afeta diretamente a forma como os outros te percebem — e a qualidade da sua viagem inteira.</p>
 
-// ─── DRAWING ─────────────────────────────────────────────────────────────────
-function draw() {
-  ctx.clearRect(0, 0, W, H);
+  <div class="gr"><div class="gr-t">Verdades que você precisa aceitar antes de embarcar</div>
+    <div class="cd"><div class="en">"You will make mistakes. That's not failure — that's the process."</div><div class="pt">Você vai cometer erros. Isso não é fracasso — é o processo. Nativos não esperam perfeição de você. Esperam esforço. E esforço, eles respeitam.</div></div>
+    <div class="cd"><div class="en">"You don't need every word. You need the right attitude."</div><div class="pt">Você não precisa de todas as palavras. Precisa da atitude certa. Um sorriso + "Excuse me" + boa vontade resolve mais situações do que um vocabulário de 5.000 palavras dito com medo.</div></div>
+    <div class="cd"><div class="en">"Nobody is judging your English. They're just trying to help you."</div><div class="pt">Ninguém está julgando seu inglês. Eles estão apenas tentando te ajudar. O garçom, o recepcionista, o motorista — todos querem que a interação funcione tanto quanto você.</div></div>
+    <div class="cd"><div class="en">"The worst that can happen is a funny story."</div><div class="pt">O pior que pode acontecer é uma história engraçada. O pedido errado no restaurante, a pronúncia que saiu errada, o mal-entendido no Uber — tudo isso vira história para contar. Nada disso é tragédia.</div></div>
+    <div class="cd"><div class="en">"You already speak two languages. Most people you'll meet speak one."</div><div class="pt">Você já fala duas línguas. A maioria das pessoas que vai encontrar fala uma. Orgulhe-se de estar fazendo o esforço. Você está do lado certo.</div></div>
+  </div>
 
-  // subtle grid lines
-  ctx.strokeStyle = 'rgba(196,164,90,.04)';
-  ctx.lineWidth = 1;
-  for (let c = 0; c <= COLS; c++) {
-    ctx.beginPath(); ctx.moveTo(c * CELL, 0); ctx.lineTo(c * CELL, H); ctx.stroke();
-  }
-  for (let r = 0; r <= ROWS; r++) {
-    ctx.beginPath(); ctx.moveTo(0, r * CELL); ctx.lineTo(W, r * CELL); ctx.stroke();
-  }
+  <div class="bk warn">
+    <h4>Os 3 Erros Mentais Mais Comuns</h4>
+    <ul>
+      <li><strong>Traduzir mentalmente antes de falar.</strong> Isso cria um delay que trava a conversa. Pratique chunks (blocos) prontos — eles saem sem tradução porque foram memorizados inteiros.</li>
+      <li><strong>Pedir desculpas pelo seu inglês.</strong> Nunca diga "Sorry for my bad English." Troque por "Thank you for your patience." Muda a energia de culpa para gratidão.</li>
+      <li><strong>Esperar a frase perfeita antes de abrir a boca.</strong> A frase imperfeita dita com confiança comunica mais do que o silêncio perfeito. Fale. Erre. Corrija. Avance.</li>
+    </ul>
+  </div>
 
-  // food word
-  if (foodItem) drawFoodWord(foodItem);
+  <div class="banner"><div class="tc"><h3>Você está <em>pronto(a)</em>.</h3>
+<p>Agora vá para o Módulo 01 — Primeiras Impressões — e comece sua jornada.</p></div></div>
 
-  // snake
-  drawSnake();
-}
-
-function drawSnake() {
-  const len = snake.length;
-  snake.forEach((seg, i) => {
-    const t = i / len; // 0 = head, 1 = tail
-    const x = seg.x * CELL;
-    const y = seg.y * CELL;
-    const pad = 3 + t * 4;
-    const r   = (CELL / 2 - pad);
-    const alpha = 1 - t * 0.6;
-
-    if (i === 0) {
-      // head — gold with glow
-      ctx.save();
-      ctx.shadowColor  = 'rgba(196,164,90,.7)';
-      ctx.shadowBlur   = 18;
-      ctx.fillStyle    = '#C4A45A';
-      roundRect(ctx, x + 3, y + 3, CELL - 6, CELL - 6, 6);
-      ctx.fill();
-      ctx.restore();
-
-      // eyes
-      const eyeSize = 3;
-      ctx.fillStyle = '#050D1A';
-      const ex1 = x + CELL/2 - 4, ey1 = y + CELL/2 - 4;
-      const ex2 = x + CELL/2 + 2, ey2 = y + CELL/2 - 4;
-
-      if (dir.x === 1)  { drawEyes(x + CELL - 10, y + CELL/2 - 4, x + CELL - 10, y + CELL/2 + 2); }
-      else if (dir.x === -1) { drawEyes(x + 6, y + CELL/2 - 4, x + 6, y + CELL/2 + 2); }
-      else if (dir.y === -1) { drawEyes(x + CELL/2 - 4, y + 6, x + CELL/2 + 2, y + 6); }
-      else              { drawEyes(x + CELL/2 - 4, y + CELL - 10, x + CELL/2 + 2, y + CELL - 10); }
-
-    } else {
-      // body — gradient from gold to transparent
-      const gAlpha = Math.max(0.08, alpha);
-      ctx.fillStyle = `rgba(196,164,90,${gAlpha})`;
-      roundRect(ctx, x + 4 + t * 2, y + 4 + t * 2, CELL - 8 - t * 4, CELL - 8 - t * 4, 5);
-      ctx.fill();
-
-      // inner shine
-      if (alpha > 0.3) {
-        ctx.fillStyle = `rgba(212,186,122,${gAlpha * 0.4})`;
-        roundRect(ctx, x + 7, y + 7, CELL - 14, 4, 2);
-        ctx.fill();
-      }
-    }
-  });
-}
-
-function drawEyes(x1, y1, x2, y2) {
-  ctx.fillStyle = '#050D1A';
-  ctx.beginPath(); ctx.arc(x1 + 2, y1 + 2, 2.5, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.arc(x2 + 2, y2 + 2, 2.5, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,0.7)';
-  ctx.beginPath(); ctx.arc(x1 + 3, y1 + 1, 1, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.arc(x2 + 3, y2 + 1, 1, 0, Math.PI * 2); ctx.fill();
-}
-
-function drawFoodWord(item) {
-  const x = item.x * CELL;
-  const y = item.y * CELL;
-
-  // pulsing glow halo
-  const time = Date.now() / 1000;
-  const pulse = 0.5 + 0.5 * Math.sin(time * 3);
-
-  ctx.save();
-  ctx.shadowColor  = `rgba(196,164,90,${0.4 + pulse * 0.4})`;
-  ctx.shadowBlur   = 16 + pulse * 10;
-
-  // cell highlight
-  const grad = ctx.createRadialGradient(x + CELL/2, y + CELL/2, 2, x + CELL/2, y + CELL/2, CELL);
-  grad.addColorStop(0, `rgba(196,164,90,${0.22 + pulse * 0.1})`);
-  grad.addColorStop(1, 'rgba(196,164,90,0)');
-  ctx.fillStyle = grad;
-  roundRect(ctx, x + 1, y + 1, CELL - 2, CELL - 2, 8);
-  ctx.fill();
-
-  // border
-  ctx.strokeStyle = `rgba(196,164,90,${0.5 + pulse * 0.3})`;
-  ctx.lineWidth   = 1.5;
-  roundRect(ctx, x + 2, y + 2, CELL - 4, CELL - 4, 7);
-  ctx.stroke();
-  ctx.restore();
-
-  // word — adaptive font size
-  const word = item.en;
-  const maxW  = CELL * 3.2;
-  let fontSize = 11;
-  ctx.font = `500 ${fontSize}px 'Raleway', sans-serif`;
-  while (ctx.measureText(word).width > maxW - 8 && fontSize > 7) {
-    fontSize--;
-    ctx.font = `500 ${fontSize}px 'Raleway', sans-serif`;
-  }
-
-  ctx.save();
-  ctx.shadowColor = 'rgba(196,164,90,.8)';
-  ctx.shadowBlur  = 8;
-  ctx.fillStyle   = `rgba(232,217,176,${0.85 + pulse * 0.15})`;
-  ctx.textAlign   = 'center';
-  ctx.textBaseline = 'middle';
-
-  // draw word ABOVE the cell if it would overflow right
-  const textX = x + CELL / 2;
-  let textY   = y - 10; // above cell
-  if (textY < 14) textY = y + CELL + 14; // below instead
-
-  ctx.font = `500 ${fontSize}px 'Raleway', sans-serif`;
-  ctx.letterSpacing = '0.1em';
-  ctx.fillText(word.toUpperCase(), textX, textY);
-
-  // small gold dot on the cell center
-  ctx.fillStyle = `rgba(196,164,90,${0.7 + pulse * 0.3})`;
-  ctx.beginPath(); ctx.arc(x + CELL/2, y + CELL/2, 4, 0, Math.PI * 2); ctx.fill();
-
-  ctx.restore();
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
-}
-
-// ─── UI UPDATES ──────────────────────────────────────────────────────────────
-function updateScoreDisplay() {
-  const el = document.getElementById('scoreDisplay');
-  el.textContent = score;
-  el.classList.remove('pulse');
-  void el.offsetWidth;
-  el.classList.add('pulse');
-}
-
-function updateLevelDisplay() {
-  document.getElementById('levelDisplay').textContent = ROMAN[level - 1] || level;
-}
-
-function showWordToast(item) {
-  const el = document.getElementById('wordToast');
-  el.textContent = `${item.en} — ${item.pt}`;
-  el.classList.remove('show');
-  void el.offsetWidth;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 900);
-}
-
-function updateGlossary() {
-  const g = document.getElementById('glossary');
-  // keep title
-  const title = g.querySelector('.glossary-title');
-  g.innerHTML = '';
-  g.appendChild(title);
-  collected.slice(0, 6).forEach((item, i) => {
-    const entry = document.createElement('div');
-    entry.className = 'glossary-entry';
-    entry.style.animationDelay = `${i * 50}ms`;
-    entry.innerHTML = `<div class="glossary-word">${item.en}</div><div class="glossary-pt">${item.pt}</div>`;
-    g.appendChild(entry);
-  });
-}
-
-function showOverlay(which) {
-  document.getElementById('overlayStart').classList.add('hidden');
-  document.getElementById('overlayOver').classList.add('hidden');
-  if (which === 'start') {
-    document.getElementById('overlayStart').classList.remove('hidden');
-  } else if (which === 'over') {
-    document.getElementById('finalScore').textContent = score;
-    const last = collected[0];
-    document.getElementById('lastWord').textContent = last
-      ? `Último termo: ${last.en} — ${last.pt}`
-      : 'Continue praticando!';
-    document.getElementById('overlayOver').classList.remove('hidden');
-  }
-}
-
-// ─── ANIMATION LOOP (for food pulse while running) ────────────────────────────
-let rafId;
-function animate() {
-  if (running && !paused) draw();
-  rafId = requestAnimationFrame(animate);
-}
-animate();
-
-// ─── CONTROLS ────────────────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  const key = e.key;
-  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d'].includes(key)) {
-    e.preventDefault();
-  }
-  if (!running) return;
-  if (key === 'p' || key === 'P') {
-    paused = !paused;
-    return;
-  }
-  const map = {
-    ArrowUp:    { x: 0,  y: -1 },
-    ArrowDown:  { x: 0,  y:  1 },
-    ArrowLeft:  { x: -1, y:  0 },
-    ArrowRight: { x: 1,  y:  0 },
-    w:          { x: 0,  y: -1 },
-    s:          { x: 0,  y:  1 },
-    a:          { x: -1, y:  0 },
-    d:          { x: 1,  y:  0 },
-  };
-  const nd = map[key];
-  if (nd && !(nd.x === -dir.x && nd.y === -dir.y)) {
-    nextDir = nd;
-  }
-});
-
-// Touch/swipe support
-let touchStart = null;
-canvas.addEventListener('touchstart', e => {
-  touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-}, { passive: true });
-canvas.addEventListener('touchend', e => {
-  if (!touchStart) return;
-  const dx = e.changedTouches[0].clientX - touchStart.x;
-  const dy = e.changedTouches[0].clientY - touchStart.y;
-  if (Math.abs(dx) > Math.abs(dy)) {
-    const nd = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
-    if (!(nd.x === -dir.x)) nextDir = nd;
-  } else {
-    const nd = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
-    if (!(nd.y === -dir.y)) nextDir = nd;
-  }
-  touchStart = null;
-}, { passive: true });
-
-// ─── BUTTONS ─────────────────────────────────────────────────────────────────
-document.getElementById('btnStart').addEventListener('click', () => {
-  document.getElementById('overlayStart').classList.add('hidden');
-  initGame();
-});
-document.getElementById('btnRestart').addEventListener('click', () => {
-  document.getElementById('overlayOver').classList.add('hidden');
-  initGame();
-});
-
-// ─── RESIZE ──────────────────────────────────────────────────────────────────
-window.addEventListener('resize', () => {
-  if (!running) { resize(); draw(); }
-});
-
-// initial draw
-draw();
-</script>
-</body>
-</html>
+  <div class="bk welcome" style="margin-top:3rem">
+    <h4>Mensagem de Boas-Vindas</h4>
+    <p>Parabéns por estar aqui. O simples fato de ter escolhido se preparar já te coloca à frente da maioria dos viajantes. Este curso foi construído com cuidado, detalhe e respeito pelo seu tempo e pelo seu investimento. Cada frase foi pensada para ser útil. Cada nota cultural foi escrita para evitar um constrangimento real. Cada diálogo simula uma situação que você vai viver de verdade.<br><br>Confie no material. Confie no processo. E acima de tudo — confie em você.<br><br><strong>Boa viagem. Boa jornada. Bom inglês.</strong></p>
+  </div>
+</section>
+<div class="sep"><span class="d"></span></div>
+<footer class="footer">
+  <div class="footer-b">MD Talk — Travel Edition</div>
+  <p class="footer-t">Conteúdo exclusivo para fins educacionais.<br>Desenvolvido com excelência para alunos que buscam comunicação internacional de alto nível.</p>
+</footer>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p></main>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
